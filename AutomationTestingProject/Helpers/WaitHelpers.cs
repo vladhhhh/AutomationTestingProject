@@ -23,7 +23,7 @@ namespace AutomationTestingProject.Helpers
 
         public static void WaitForElementToBeVisibleCustom(IWebDriver driver, By by)
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             wait.Until(webDriver => webDriver.FindElement(by).Displayed && webDriver.FindElement(by).Enabled);
         }
     }

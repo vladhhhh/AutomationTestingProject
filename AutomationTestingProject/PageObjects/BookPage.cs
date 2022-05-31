@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AutomationTestingProject.PageObjects
@@ -15,9 +16,9 @@ namespace AutomationTestingProject.PageObjects
             driver = browser;
         }
 
-        private By Title => By.CssSelector("div[class=\"profile-wrapper\"]>div[id=\"title-wrapper\"]>div>label");
+        public By Title => By.CssSelector("div[class=\"profile-wrapper\"]>div[id=\"title-wrapper\"]>div>label");
         private IWebElement TxtTitle => driver.FindElements(Title).ElementAt(1);
-        private By AddBook => By.CssSelector("button[id=\"addNewRecordButton\"]");
+        public By AddBook => By.CssSelector("button[id=\"addNewRecordButton\"]");
         private IWebElement BtnAddBook => driver.FindElements(AddBook).ElementAt(1);
 
         private string LblBookAddedSuccessfully => "Book added to your collection.";
@@ -33,7 +34,9 @@ namespace AutomationTestingProject.PageObjects
         {
             IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
             js.ExecuteScript("window.scrollBy(0,document.body.scrollHeight)");
-            Helpers.WaitHelpers.WaitForElementToBeVisible(driver, AddBook);
+            //Helpers.WaitHelpers.WaitForElementToBeVisible(driver, AddBook);
+            // Butonul nu apare efectiv datorita reclamelor care se incarca 
+            // inaintea butonului, trebuie sa asteptam efectiv
             BtnAddBook.Click();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
             string message = driver.SwitchTo().Alert().Text;
@@ -45,7 +48,10 @@ namespace AutomationTestingProject.PageObjects
         {
             IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
             js.ExecuteScript("window.scrollBy(0,document.body.scrollHeight)");
-            Helpers.WaitHelpers.WaitForElementToBeVisible(driver, AddBook);
+            //Helpers.WaitHelpers.WaitForElementToBeVisibleCustom(driver, AddBook);
+            // Butonul nu apare efectiv datorita reclamelor care se incarca 
+            // inaintea butonului, trebuie sa asteptam efectiv
+            Thread.Sleep(2000);
 
             BtnAddBook.Click();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
