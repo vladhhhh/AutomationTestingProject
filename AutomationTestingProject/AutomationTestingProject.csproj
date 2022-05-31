@@ -59,6 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BookstoreTests.cs" />
     <Compile Include="BookTests.cs" />
     <Compile Include="Helpers\WaitHelpers.cs" />
     <Compile Include="LoginTests.cs" />

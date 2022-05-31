@@ -3,21 +3,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutomationTestingProject
 {
     [TestClass]
-    public class BookTests
+    public class BookstoreTests
     {
         private IWebDriver driver;
         private LoginPage loginPage;
         private ProfilePage profilePage;
-        private BookPage bookPage;
-        private BookStorePage bookStore;
 
         [TestInitialize]
         public void TestInitialize()
@@ -30,22 +24,19 @@ namespace AutomationTestingProject
 
             profilePage = loginPage.LoginApplication("user", "Password_1!");
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
-            bookStore = profilePage.NavigateToBookStorePage();
+            profilePage.NavigateToBookStorePage();
             // implicit wait
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
-            bookPage = bookStore.NavigateToBookPage("Learning JavaScript Design Patterns");
         }
 
         [TestMethod]
-        public void User_Should_Add_A_Book_Successfully()
+        public void If_Book_Exists()
         {
-            Assert.IsTrue(bookPage.Add_Book_Successfully());
-        }
+            var bookstore = new BookStorePage(driver);
+            var bookpage = bookstore.NavigateToBookPage("Learning JavaScript Design Patterns");
+            
+            Assert.IsTrue(bookpage.Is_This_The_Right_Book("Learning JavaScript Design Patterns"));
 
-        [TestMethod]
-        public void User_Tries_To_Add_A_Book_Already_Added()
-        {
-            Assert.IsTrue(bookPage.Book_Already_Added());
         }
 
         [TestCleanup]

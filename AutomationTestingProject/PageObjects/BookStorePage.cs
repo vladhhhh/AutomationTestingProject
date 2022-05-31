@@ -28,7 +28,7 @@ namespace AutomationTestingProject.PageObjects
         private By Books = By.CssSelector("div[class=\"action-buttons\"]");
         private IList<IWebElement> LinkBooks => driver.FindElements(Books);
 
-        public BookPage FindBook(string bookNameToAdd)
+        public BookPage NavigateToBookPage(string bookNameToAdd)
         {
             Helpers.WaitHelpers.WaitForElementToBeClickable(driver, Books,5);
             string bookName;
@@ -41,6 +41,9 @@ namespace AutomationTestingProject.PageObjects
                     return new BookPage(driver);
                 }
             }
+            return new BookPage(driver);
+
         }
+
     }
 }
